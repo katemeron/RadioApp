@@ -26,7 +26,8 @@ class RadioListFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val recyclerView = view as RecyclerView
         recyclerView.adapter = radioListAdapter
-        radioViewModel = RadioViewModel(DemoRadioRepository())//ViewModelProviders.of(this).get(RadioViewModel::class.java)
+        radioViewModel = RadioViewModel(DemoRadioRepository())
+        //ViewModelProviders.of(this).get(RadioViewModel::class.java)
         radioViewModel.radioListData.observe(viewLifecycleOwner, Observer {
             radioListAdapter.setRadioListData(it)
         })
