@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="176dp"
     android:background="@drawable/side_nav_bar"
@@ -18,17 +19,44 @@
         android:paddingTop="8dp"
         app:srcCompat="@mipmap/ic_launcher_round" />
 
-    <TextView
+    <LinearLayout
+        android:id="@+id/temperature_group"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="8dp"
-        android:text="Ваш профиль"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+        android:paddingTop="8dp">
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:text="@string/current_temp" />
+
+        <TextView
+            android:id="@+id/temperature_sensor"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            tools:text="15" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/pressure_group"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Однажды здесь будет Ваш профиль, но не сегодня" />
+        android:paddingTop="8dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:text="@string/current_pressure" />
+
+        <TextView
+            android:id="@+id/sensor2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            tools:text="15" />
+    </LinearLayout>
 
 </LinearLayout>
