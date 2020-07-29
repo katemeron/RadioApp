@@ -16,6 +16,7 @@ import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.material.navigation.NavigationView
 import djisachan.radioapp.radiomodule.presentation.RadioListFragment
+import djisachan.radioapp.utils.DialogWrapperFragment
 
 
 /**
@@ -48,10 +49,10 @@ class MainSingleActivity : AppCompatActivity(), NavigationView.OnNavigationItemS
     override fun onResume() {
         super.onResume()
         temperature?.let {
-            sensorManager.registerListener(this, temperature, SensorManager.SENSOR_DELAY_NORMAL)
+            sensorManager.registerListener(this, it, SensorManager.SENSOR_DELAY_NORMAL)
         }
         pressure?.let {
-            sensorManager.registerListener(this, pressure, SensorManager.SENSOR_DELAY_FASTEST)
+            sensorManager.registerListener(this, it, SensorManager.SENSOR_DELAY_FASTEST)
         }
     }
 
@@ -69,6 +70,7 @@ class MainSingleActivity : AppCompatActivity(), NavigationView.OnNavigationItemS
             R.id.action_settings -> {
             }
             R.id.action_feedback -> {
+                DialogWrapperFragment().show(supportFragmentManager, "dialogWrapper")
             }
             else -> {
             }
