@@ -5,4 +5,5 @@
     <color name="colorEnd">#C33700B3</color>
     <color name="colorStart">#3E7CA6</color>
     <color name="colorAccent">#03DAC5</color>
+    <color name="colorGray">#C7CFCE</color>
 </resources>
