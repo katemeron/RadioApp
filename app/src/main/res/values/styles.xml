@@ -12,4 +12,13 @@
         <item name="windowNoTitle">true</item>
     </style>
 
+
+    <style name="Widget.RadioApp.ShimmerLayout" parent="">
+        <item name="shimmer_angle">0</item>
+        <item name="shimmer_animation_duration">2500</item>
+        <item name="shimmer_auto_start">true</item>
+        <item name="shimmer_color">@color/colorGray</item>
+    </style>
+
+
 </resources>

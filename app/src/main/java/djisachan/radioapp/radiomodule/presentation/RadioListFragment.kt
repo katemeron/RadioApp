@@ -2,13 +2,14 @@ package djisachan.radioapp.radiomodule.presentation
 
 import android.os.Bundle
 import android.view.*
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.RecyclerView
 import djisachan.radioapp.R
-import djisachan.radioapp.radiomodule.data.DemoRadioRepository
+import djisachan.radioapp.radiomodule.data.ProdRadioRepository
 
 /**
  * @author Markova Ekaterina on 25-Jul-20
@@ -31,9 +32,12 @@ class RadioListFragment : Fragment() {
         initToolbar()
         val recyclerView = view.findViewById<RecyclerView>(R.id.recycler_view)
         recyclerView.adapter = radioListAdapter
-        radioViewModel = RadioViewModel(DemoRadioRepository())
+        radioViewModel = RadioViewModel(ProdRadioRepository())
         radioViewModel.radioListData.observe(viewLifecycleOwner, Observer {
             radioListAdapter.setRadioListData(it)
+        })
+        radioViewModel.errorData.observe(viewLifecycleOwner, Observer {
+            Toast.makeText(context, it, Toast.LENGTH_LONG).show()
         })
         radioViewModel.uploadRadioList()
     }
