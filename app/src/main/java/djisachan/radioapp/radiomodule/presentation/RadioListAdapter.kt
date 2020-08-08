@@ -15,18 +15,21 @@ import djisachan.radioapp.radiomodule.domain.RadioModel
  * Адаптер списка радиостанций
  * @author Markova Ekaterina on 25-Jul-20
  */
-class RadioListAdapter() : RecyclerView.Adapter<RadioListAdapter.RadioViewHolder>() {
+class RadioListAdapter(private val radioClickListener: OnRadioClickListener) :
+    RecyclerView.Adapter<RadioListAdapter.RadioViewHolder>() {
 
     private var radioList: List<RadioModel> = ArrayList()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RadioViewHolder {
         val view =
             LayoutInflater.from(parent.context).inflate(R.layout.radio_list_item, parent, false)
-        return RadioViewHolder(view)
+        return RadioViewHolder(view).apply {
+        }
     }
 
     override fun onBindViewHolder(holder: RadioViewHolder, position: Int) {
         holder.bind(radioList[position])
+        holder.itemView.setOnClickListener { radioClickListener.onClick(radioList[position].url) }
     }
 
     override fun getItemCount(): Int {
@@ -49,16 +52,15 @@ class RadioListAdapter() : RecyclerView.Adapter<RadioListAdapter.RadioViewHolder
                 start()
             }
             nameTextView.text = radioModel.name
-           if (radioModel.imageUrl.isEmpty()){
-               iconView.setImageResource(R.drawable.ic_baseline_emoji_emotions_24)
-           }
-            else {
-               iconView.load(radioModel.imageUrl) {
-                   crossfade(true)
-                   placeholder(circularProgressDrawable)
-                   error(R.drawable.ic_baseline_emoji_emotions_24)
-               }
-           }
+            if (radioModel.imageUrl.isEmpty()) {
+                iconView.setImageResource(R.drawable.ic_baseline_emoji_emotions_24)
+            } else {
+                iconView.load(radioModel.imageUrl) {
+                    crossfade(true)
+                    placeholder(circularProgressDrawable)
+                    error(R.drawable.ic_baseline_emoji_emotions_24)
+                }
+            }
         }
     }
 }

@@ -8,16 +8,17 @@ import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.RecyclerView
+import djisachan.radioapp.MainSingleActivity
 import djisachan.radioapp.R
 import djisachan.radioapp.radiomodule.data.ProdRadioRepository
 
 /**
  * @author Markova Ekaterina on 25-Jul-20
  */
-class RadioListFragment : Fragment() {
+class RadioListFragment : Fragment(), OnRadioClickListener {
 
     private lateinit var radioViewModel: RadioViewModel
-    private val radioListAdapter = RadioListAdapter()
+    private val radioListAdapter = RadioListAdapter(this)
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -73,5 +74,9 @@ class RadioListFragment : Fragment() {
             title = "Радиостанции"
             setHasOptionsMenu(true)
         }
+    }
+
+    override fun onClick(url: String) {
+        (requireActivity() as MainSingleActivity).updateRadioPlayerFragment(url)
     }
 }

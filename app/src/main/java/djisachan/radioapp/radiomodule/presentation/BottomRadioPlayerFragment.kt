@@ -11,7 +11,7 @@ import djisachan.radioapp.R
 /**
  * @author Markova Ekaterina on 02-Aug-20
  */
-class BottomRadioPlayerFragment : Fragment() {
+class BottomRadioPlayerFragment : Fragment(), RadioPlayCallback {
 
     private lateinit var playPauseImageView: ImageView
     private var isPlaying: Boolean = true
@@ -46,6 +46,9 @@ class BottomRadioPlayerFragment : Fragment() {
 
     private fun initDependencies() {
         radioPlayerViewModel = RadioPlayerViewModel() //пока без адекватного внедрения зависимостей
-        radioPlayerViewModel.startPlaying(requireActivity(), "asset:///demo_song.mp3")
+    }
+
+    override fun start(url: String) {
+        radioPlayerViewModel.startPlaying(requireActivity(), url)
     }
 }

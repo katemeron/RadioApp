@@ -10,6 +10,7 @@ import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.material.navigation.NavigationView
 import djisachan.radioapp.radiomodule.presentation.BottomRadioPlayerFragment
 import djisachan.radioapp.radiomodule.presentation.RadioListFragment
+import djisachan.radioapp.radiomodule.presentation.RadioPlayCallback
 
 
 /**
@@ -17,15 +18,19 @@ import djisachan.radioapp.radiomodule.presentation.RadioListFragment
  */
 class MainSingleActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
+    private lateinit var radioPlayCallback: RadioPlayCallback
     private lateinit var drawerLayout: DrawerLayout
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        val bottomFragment = BottomRadioPlayerFragment()
+        radioPlayCallback = bottomFragment
         supportFragmentManager
-                .beginTransaction()
-                .add(R.id.fragment_container, RadioListFragment())
-                .add(R.id.bottom_container, BottomRadioPlayerFragment())
-                .commit()
+            .beginTransaction()
+            .add(R.id.fragment_container, RadioListFragment())
+            .add(R.id.bottom_container, bottomFragment)
+            .commit()
         initToolbar()
         initDrawer()
     }
@@ -48,6 +53,10 @@ class MainSingleActivity : AppCompatActivity(), NavigationView.OnNavigationItemS
         return true
     }
 
+    fun updateRadioPlayerFragment(url: String) {
+        radioPlayCallback.start(url)
+    }
+
     private fun initToolbar(): Toolbar {
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
@@ -60,11 +69,11 @@ class MainSingleActivity : AppCompatActivity(), NavigationView.OnNavigationItemS
         val navigationView = findViewById<NavigationView>(R.id.nav_view)
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
         val toggle = ActionBarDrawerToggle(
-                this,
-                drawerLayout,
-                toolbar,
-                R.string.navigation_drawer_open,
-                R.string.navigation_drawer_close
+            this,
+            drawerLayout,
+            toolbar,
+            R.string.navigation_drawer_open,
+            R.string.navigation_drawer_close
         )
         drawerLayout.addDrawerListener(toggle)
         toggle.syncState()
