@@ -46,6 +46,7 @@ dependencies {
 
     implementation 'com.google.android.material:material:1.1.0'
     implementation 'com.google.android.exoplayer:exoplayer:2.11.6'
+    implementation 'saschpe.android:exoplayer2-ext-icy:2.1.0'
 
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.1.0'

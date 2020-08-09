@@ -4,7 +4,7 @@ import android.content.Context
 import android.net.Uri
 import com.google.android.exoplayer2.SimpleExoPlayer
 import com.google.android.exoplayer2.source.MediaSource
-import com.google.android.exoplayer2.source.ProgressiveMediaSource
+import com.google.android.exoplayer2.source.hls.HlsMediaSource
 import com.google.android.exoplayer2.upstream.DefaultHttpDataSourceFactory
 import com.google.android.exoplayer2.util.Util
 
@@ -26,7 +26,7 @@ class RadioPlayer(private val context: Context) {
     fun start(uri: String) {
         val dataSpec = Uri.parse(uri)
         dataSourceFactory = DefaultHttpDataSourceFactory(Util.getUserAgent(context, "djisachan.radio"))
-        mediaSource = ProgressiveMediaSource.Factory(dataSourceFactory).createMediaSource(dataSpec)
+        mediaSource = HlsMediaSource.Factory(dataSourceFactory).createMediaSource(dataSpec)
         exoPlayer.run {
             prepare(mediaSource)
             playWhenReady = true
@@ -51,5 +51,4 @@ class RadioPlayer(private val context: Context) {
             playWhenReady = false
         }
     }
-
 }

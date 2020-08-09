@@ -50,5 +50,7 @@ class BottomRadioPlayerFragment : Fragment(), RadioPlayCallback {
 
     override fun start(url: String) {
         radioPlayerViewModel.startPlaying(requireActivity(), url)
+        playPauseImageView.setImageResource(R.drawable.ic_pause_circle_outline_36)
+        isPlaying = true
     }
 }
