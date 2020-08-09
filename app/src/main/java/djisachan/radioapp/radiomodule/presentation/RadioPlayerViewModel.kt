@@ -6,18 +6,26 @@ import android.content.Intent
 import android.content.ServiceConnection
 import android.os.IBinder
 import android.util.Log
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import djisachan.radioapp.radiomodule.data.PlayerService
+import djisachan.radioapp.radiomodule.data.historydao.HistoryRadioDatabase
+import djisachan.radioapp.radiomodule.data.player.PlayerService
+import djisachan.radioapp.radiomodule.domain.RadioModel
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
+
 
 /**
  * Вью модель для нижнего плеера
  * @author Markova Ekaterina on 02-Aug-20
  */
-class RadioPlayerViewModel : ViewModel() {
+class RadioPlayerViewModel(private val historyRadioDatabase: HistoryRadioDatabase) : ViewModel() {
 
     private var serviceConnection: ServiceConnection
     private lateinit var playerService: PlayerService
     private var isBound = false
+
+    val lastRadio = MutableLiveData<RadioModel>()
 
     init {
         serviceConnection = object : ServiceConnection {
@@ -60,5 +68,16 @@ class RadioPlayerViewModel : ViewModel() {
      */
     fun pausePlaying(context: Context) {
         context.unbindService(serviceConnection)
+    }
+
+    fun getLastRadio(id: String) {
+        val dao = historyRadioDatabase.getHistoryDao()
+        dao.getRadioById(id)
+            .map { history ->
+                RadioModel(history.stationuuid, history.name, history.url, history.imageUrl)
+            }
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({ radio -> lastRadio.value = radio }, {})
     }
 }

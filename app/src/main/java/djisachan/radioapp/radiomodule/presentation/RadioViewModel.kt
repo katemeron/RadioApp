@@ -4,8 +4,9 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import djisachan.radioapp.radiomodule.data.RadioRepository
+import djisachan.radioapp.radiomodule.data.historydao.HistoryRadio
+import djisachan.radioapp.radiomodule.data.historydao.HistoryRadioDatabase
 import djisachan.radioapp.radiomodule.domain.RadioModel
-import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import java.util.*
 import kotlin.collections.ArrayList
@@ -13,12 +14,18 @@ import kotlin.collections.ArrayList
 /**
  * @author Markova Ekaterina on 25-Jul-20
  */
-class RadioViewModel(private val radioRepository: RadioRepository) : ViewModel() {
+class RadioViewModel(
+    private val radioRepository: RadioRepository,
+    private val historyRadioDatabase: HistoryRadioDatabase
+) : ViewModel() {
 
     val radioListData = MutableLiveData<List<RadioModel>>()
     val errorData = MutableLiveData<String>()
     val radioItemsCopy = ArrayList<RadioModel>()
 
+    /**
+     * Загрузить список радиостанций
+     */
     fun uploadRadioList() {
         radioRepository.getRadioList()
             .subscribeOn(Schedulers.io())
@@ -32,6 +39,9 @@ class RadioViewModel(private val radioRepository: RadioRepository) : ViewModel()
 
     }
 
+    /**
+     * Поиск радиостанции по строке
+     */
     fun queryList(predicate: String) {
         if (predicate.isEmpty()) {
             radioListData.postValue(radioItemsCopy)
@@ -41,5 +51,16 @@ class RadioViewModel(private val radioRepository: RadioRepository) : ViewModel()
                     .contains(predicate.toLowerCase(Locale.getDefault()))
             })
         }
+    }
+
+    /**
+     * Сохранить радиостанцию в историю
+     * @param radio модель данных
+     */
+    fun saveRadioStationToHistory(radio: RadioModel) {
+        val dao = historyRadioDatabase.getHistoryDao()
+        dao.insert(HistoryRadio(radio.stationuuid, radio.name, radio.url, radio.imageUrl))
+            .subscribeOn(Schedulers.io())
+            .subscribe()
     }
 }

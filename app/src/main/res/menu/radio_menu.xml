@@ -7,7 +7,7 @@
         android:orderInCategory="10"
         android:title="Поиск"
         app:actionViewClass="androidx.appcompat.widget.SearchView"
-        app:showAsAction="always|collapseActionView" />
+        app:showAsAction="ifRoom|collapseActionView" />
     <item
         android:id="@+id/action_share"
         android:orderInCategory="20"

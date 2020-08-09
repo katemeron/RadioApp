@@ -1,7 +1,7 @@
 package djisachan.radioapp.radiomodule.data
 
 import djisachan.radioapp.radiomodule.domain.RadioModel
-import io.reactivex.Single
+import io.reactivex.Observable
 
 /**
  * Репозиторий работы с радиостанциями
@@ -12,6 +12,6 @@ interface RadioRepository {
     /**
      * Получение списка радиостанций
      */
-    fun getRadioList(): Single<List<RadioModel>>
+    fun getRadioList(): Observable<List<RadioModel>>
 
 }

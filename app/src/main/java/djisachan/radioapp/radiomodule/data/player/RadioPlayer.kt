@@ -1,4 +1,4 @@
-package djisachan.radioapp.radiomodule.data
+package djisachan.radioapp.radiomodule.data.player
 
 import android.content.Context
 import android.net.Uri
@@ -48,6 +48,7 @@ class RadioPlayer(private val context: Context) {
      */
     fun pause() {
         exoPlayer.run {
+            stop()
             playWhenReady = false
         }
     }

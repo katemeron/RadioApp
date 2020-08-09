@@ -2,7 +2,7 @@ package djisachan.radioapp.radiomodule.data
 
 import djisachan.radioapp.radiomodule.domain.RadioModel
 import djisachan.radioapp.radiomodule.domain.RadioStationApi
-import io.reactivex.Single
+import io.reactivex.Observable
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
@@ -23,12 +23,19 @@ public class ProdRadioRepository() : RadioRepository {
         radioStationApi = retrofit.create(RadioStationApi::class.java)
     }
 
-    override fun getRadioList(): Single<List<RadioModel>> {
+    override fun getRadioList(): Observable<List<RadioModel>> {
         return radioStationApi
             .loadRadioStations(COUNTRY)
-            .flatMapIterable { response -> response }
-            .map { station -> RadioModel(station.name, station.url, station.favicon) }
-            .toList()
+            .map {
+                it.map { station ->
+                    RadioModel(
+                        station.stationuuid,
+                        station.name,
+                        station.url,
+                        station.favicon
+                    )
+                }
+            }
     }
 
     companion object {
