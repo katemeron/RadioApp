@@ -10,7 +10,7 @@ data class RadioStationResponse(
     @JsonProperty("changeuuid")
     val changeuuid: String? = null,
     @JsonProperty("stationuuid")
-    val stationuuid: String? = null,
+    val stationuuid: String,
     @JsonProperty("name")
     val name: String,
     @JsonProperty("url")

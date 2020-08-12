@@ -8,9 +8,11 @@ import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.RecyclerView
+import djisachan.radioapp.App
 import djisachan.radioapp.MainSingleActivity
 import djisachan.radioapp.R
 import djisachan.radioapp.radiomodule.data.ProdRadioRepository
+import djisachan.radioapp.radiomodule.domain.RadioModel
 
 /**
  * @author Markova Ekaterina on 25-Jul-20
@@ -33,7 +35,7 @@ class RadioListFragment : Fragment(), OnRadioClickListener {
         initToolbar()
         val recyclerView = view.findViewById<RecyclerView>(R.id.recycler_view)
         recyclerView.adapter = radioListAdapter
-        radioViewModel = RadioViewModel(ProdRadioRepository())
+        radioViewModel = RadioViewModel(ProdRadioRepository(), App.instance.historyRadioDatabase)
         radioViewModel.radioListData.observe(viewLifecycleOwner, Observer {
             radioListAdapter.setRadioListData(it)
         })
@@ -76,7 +78,8 @@ class RadioListFragment : Fragment(), OnRadioClickListener {
         }
     }
 
-    override fun onClick(url: String) {
-        (requireActivity() as MainSingleActivity).updateRadioPlayerFragment(url)
+    override fun onClick(radio: RadioModel) {
+        (requireActivity() as MainSingleActivity).updateRadioPlayerFragment(radio)
+        radioViewModel.saveRadioStationToHistory(radio)
     }
 }

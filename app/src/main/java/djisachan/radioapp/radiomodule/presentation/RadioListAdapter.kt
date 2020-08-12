@@ -29,7 +29,7 @@ class RadioListAdapter(private val radioClickListener: OnRadioClickListener) :
 
     override fun onBindViewHolder(holder: RadioViewHolder, position: Int) {
         holder.bind(radioList[position])
-        holder.itemView.setOnClickListener { radioClickListener.onClick(radioList[position].url) }
+        holder.itemView.setOnClickListener { radioClickListener.onClick(radioList[position]) }
     }
 
     override fun getItemCount(): Int {

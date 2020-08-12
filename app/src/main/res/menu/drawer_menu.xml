@@ -15,14 +15,16 @@
             </group>
         </menu>
     </item>
-    <group android:checkableBehavior="single">
-        <item
-            android:id="@+id/action_settings"
-            android:icon="@drawable/ic_baseline_settings_24"
-            android:title="Настройки" />
-        <item
-            android:id="@+id/action_feedback"
-            android:icon="@drawable/ic_baseline_emoji_emotions_24"
-            android:title="Связаться с нами" />
-    </group>
+    <item
+        android:id="@+id/action_history"
+        android:icon="@drawable/ic_history_36"
+        android:title="История прослушиваний" />
+    <item
+        android:id="@+id/action_settings"
+        android:icon="@drawable/ic_baseline_settings_24"
+        android:title="Настройки" />
+    <item
+        android:id="@+id/action_feedback"
+        android:icon="@drawable/ic_baseline_emoji_emotions_24"
+        android:title="Связаться с нами" />
 </menu>

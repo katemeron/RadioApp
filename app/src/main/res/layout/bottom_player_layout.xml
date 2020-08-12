@@ -4,31 +4,41 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="?android:attr/actionBarSize"
+    android:background="@color/colorGray"
     android:clickable="true"
     android:focusable="true"
     app:behavior_peekHeight="?android:attr/actionBarSize"
-    app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
-    android:background="@color/colorGray">
+    app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
 
 
-    <ImageView
-        android:id="@+id/radio_icon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:layout_marginStart="4dp"
+    <FrameLayout
+        android:id="@+id/image_left_container"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:src="@drawable/ic_baseline_emoji_emotions_24" />
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/radio_icon"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="4dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:src="@drawable/ic_baseline_emoji_emotions_24" />
+    </FrameLayout>
 
     <TextView
+        android:id="@+id/radio_name_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/radio_icon"
+        app:layout_constraintStart_toEndOf="@+id/image_left_container"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="RADIO NAME" />
 

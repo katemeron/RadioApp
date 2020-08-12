@@ -1,4 +1,4 @@
-package djisachan.radioapp.radiomodule.data
+package djisachan.radioapp.radiomodule.data.player
 
 import android.app.Service
 import android.content.Intent
@@ -29,7 +29,8 @@ class PlayerService : Service() {
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        radioPlayer = RadioPlayer(this.applicationContext)
+        radioPlayer =
+            RadioPlayer(this.applicationContext)
         intent?.getStringExtra(URI_KEY)?.let {
             radioPlayer.start(it)
         }
