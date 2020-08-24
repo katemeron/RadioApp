@@ -1,6 +1,7 @@
 package djisachan.radioapp.radiomodule.presentation
 
 import android.util.Log
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import djisachan.radioapp.radiomodule.data.RadioRepository
@@ -14,7 +15,7 @@ import kotlin.collections.ArrayList
 /**
  * @author Markova Ekaterina on 25-Jul-20
  */
-class RadioViewModel(
+class RadioViewModel @ViewModelInject constructor(
     private val radioRepository: RadioRepository,
     private val historyRadioDatabase: HistoryRadioDatabase
 ) : ViewModel() {

@@ -7,20 +7,23 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.RecyclerView
-import djisachan.radioapp.App
+import dagger.hilt.android.AndroidEntryPoint
 import djisachan.radioapp.R
+import djisachan.radioapp.RadioApp
 import djisachan.radioapp.radiomodule.domain.RadioModel
 
 /**
  * Фрагмент истории выбранных радиостанций
  * @author Markova Ekaterina on 10.08.2020
  */
+@AndroidEntryPoint
 class HistoryFragment : Fragment(), OnRadioClickListener {
 
     private val radioListAdapter = RadioListAdapter(this)
-    private lateinit var historyViewModel: HistoryViewModel
+    private val historyViewModel: HistoryViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -35,7 +38,7 @@ class HistoryFragment : Fragment(), OnRadioClickListener {
         initToolbar()
         val recyclerView = view.findViewById<RecyclerView>(R.id.recycler_view)
         recyclerView.adapter = radioListAdapter
-        historyViewModel = HistoryViewModel(App.instance.historyRadioDatabase)
+        //historyViewModel = HistoryViewModel()
         historyViewModel.radioListData.observe(viewLifecycleOwner, Observer {
             radioListAdapter.setRadioListData(it)
         })

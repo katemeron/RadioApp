@@ -6,6 +6,7 @@ import android.content.Intent
 import android.content.ServiceConnection
 import android.os.IBinder
 import android.util.Log
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import djisachan.radioapp.radiomodule.data.historydao.HistoryRadioDatabase
@@ -19,7 +20,7 @@ import io.reactivex.schedulers.Schedulers
  * Вью модель для нижнего плеера
  * @author Markova Ekaterina on 02-Aug-20
  */
-class RadioPlayerViewModel(private val historyRadioDatabase: HistoryRadioDatabase) : ViewModel() {
+class RadioPlayerViewModel @ViewModelInject constructor(private val historyRadioDatabase: HistoryRadioDatabase) : ViewModel() {
 
     private var serviceConnection: ServiceConnection
     private lateinit var playerService: PlayerService

@@ -9,17 +9,21 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import coil.api.load
-import djisachan.radioapp.App
+import dagger.hilt.android.AndroidEntryPoint
 import djisachan.radioapp.R
 import djisachan.radioapp.radiomodule.domain.RadioModel
 
 /**
  * @author Markova Ekaterina on 02-Aug-20
  */
+@AndroidEntryPoint
 class BottomRadioPlayerFragment : Fragment(), RadioPlayCallback {
+
+    private val radioPlayerViewModel: RadioPlayerViewModel by viewModels()
 
     private lateinit var lastRadioSharedPreferences: SharedPreferences
     private lateinit var playPauseImageView: ImageView
@@ -27,12 +31,10 @@ class BottomRadioPlayerFragment : Fragment(), RadioPlayCallback {
     private lateinit var radioName: TextView
     private var isPlaying: Boolean = true
 
-    private lateinit var radioPlayerViewModel: RadioPlayerViewModel
-
     override fun onCreateView(
-            inflater: LayoutInflater,
-            container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View? {
         return inflater.inflate(R.layout.bottom_player_layout, container, false)
     }
@@ -50,13 +52,14 @@ class BottomRadioPlayerFragment : Fragment(), RadioPlayCallback {
     }
 
     private fun initLastRadio() {
-        lastRadioSharedPreferences = requireActivity().getSharedPreferences(LAST_RADIO_PREF, MODE_PRIVATE)
+        lastRadioSharedPreferences =
+            requireActivity().getSharedPreferences(LAST_RADIO_PREF, MODE_PRIVATE)
         val lastId = lastRadioSharedPreferences.getString(LAST_RADIO_ID, null)
         lastId?.let { radioPlayerViewModel.getLastRadio(it) }
     }
 
     private fun initDependencies() {
-        radioPlayerViewModel = RadioPlayerViewModel(App.instance.historyRadioDatabase) //пока без адекватного внедрения зависимостей
+        //radioPlayerViewModel = RadioPlayerViewModel(RadioApp.instance.historyRadioDatabase) //пока без адекватного внедрения зависимостей
         radioPlayerViewModel.lastRadio.observe(viewLifecycleOwner, Observer {
             start(it)
         })
@@ -101,8 +104,8 @@ class BottomRadioPlayerFragment : Fragment(), RadioPlayCallback {
 
     private fun updateSharedPref(radio: RadioModel) {
         lastRadioSharedPreferences.edit()
-                .putString(LAST_RADIO_ID, radio.stationuuid)
-                .apply()
+            .putString(LAST_RADIO_ID, radio.stationuuid)
+            .apply()
     }
 
     companion object {

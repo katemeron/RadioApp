@@ -8,6 +8,7 @@ import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.material.navigation.NavigationView
+import dagger.hilt.android.AndroidEntryPoint
 import djisachan.radioapp.radiomodule.domain.RadioModel
 import djisachan.radioapp.radiomodule.presentation.BottomRadioPlayerFragment
 import djisachan.radioapp.radiomodule.presentation.HistoryFragment
@@ -18,6 +19,7 @@ import djisachan.radioapp.radiomodule.presentation.RadioPlayCallback
 /**
  * Главное активити всея приложения
  */
+@AndroidEntryPoint
 class MainSingleActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
     private lateinit var radioPlayCallback: RadioPlayCallback
@@ -29,10 +31,10 @@ class MainSingleActivity : AppCompatActivity(), NavigationView.OnNavigationItemS
         val bottomFragment = BottomRadioPlayerFragment()
         radioPlayCallback = bottomFragment
         supportFragmentManager
-                .beginTransaction()
-                .add(R.id.fragment_container, RadioListFragment())
-                .add(R.id.bottom_container, bottomFragment)
-                .commit()
+            .beginTransaction()
+            .add(R.id.fragment_container, RadioListFragment())
+            .add(R.id.bottom_container, bottomFragment)
+            .commit()
         initToolbar()
         initDrawer()
     }
@@ -45,10 +47,10 @@ class MainSingleActivity : AppCompatActivity(), NavigationView.OnNavigationItemS
             }
             R.id.action_history -> {
                 supportFragmentManager
-                        .beginTransaction()
-                        .replace(R.id.fragment_container, HistoryFragment())
-                        .addToBackStack(null)
-                        .commit()
+                    .beginTransaction()
+                    .replace(R.id.fragment_container, HistoryFragment())
+                    .addToBackStack(null)
+                    .commit()
             }
             R.id.action_settings -> {
             }
@@ -83,11 +85,11 @@ class MainSingleActivity : AppCompatActivity(), NavigationView.OnNavigationItemS
         val navigationView = findViewById<NavigationView>(R.id.nav_view)
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
         val toggle = ActionBarDrawerToggle(
-                this,
-                drawerLayout,
-                toolbar,
-                R.string.navigation_drawer_open,
-                R.string.navigation_drawer_close
+            this,
+            drawerLayout,
+            toolbar,
+            R.string.navigation_drawer_open,
+            R.string.navigation_drawer_close
         )
         drawerLayout.addDrawerListener(toggle)
         toggle.syncState()

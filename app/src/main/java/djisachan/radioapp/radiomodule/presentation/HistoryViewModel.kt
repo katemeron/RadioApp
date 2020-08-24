@@ -1,5 +1,6 @@
 package djisachan.radioapp.radiomodule.presentation
 
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import djisachan.radioapp.radiomodule.data.historydao.HistoryRadioDatabase
@@ -11,7 +12,7 @@ import io.reactivex.schedulers.Schedulers
  * Вьюмодель для истории радиостанций
  * @author Markova Ekaterina on 10.08.2020
  */
-class HistoryViewModel(
+class HistoryViewModel @ViewModelInject constructor(
     private val historyRadioDatabase: HistoryRadioDatabase
 ) : ViewModel() {
 
