@@ -1,10 +1,10 @@
-package djisachan.radioapp.radiomodule.presentation
+package djisachan.radioapp.radiomodule.presentation.radiolist
 
 import android.util.Log
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import djisachan.radioapp.radiomodule.data.RadioRepository
+import djisachan.radioapp.radiomodule.domain.RadioRepository
 import djisachan.radioapp.radiomodule.data.historydao.HistoryRadio
 import djisachan.radioapp.radiomodule.data.historydao.HistoryRadioDatabase
 import djisachan.radioapp.radiomodule.domain.RadioModel

@@ -1,5 +1,6 @@
-package djisachan.radioapp.radiomodule.data
+package djisachan.radioapp.radiomodule.data.repository
 
+import djisachan.radioapp.radiomodule.domain.RadioRepository
 import djisachan.radioapp.radiomodule.domain.RadioModel
 import djisachan.radioapp.radiomodule.domain.RadioStationApi
 import io.reactivex.Observable
@@ -7,7 +8,8 @@ import io.reactivex.Observable
 /**
  * @author Markova Ekaterina on 05-Aug-20
  */
-class ProdRadioRepository(private val radioStationApi: RadioStationApi) : RadioRepository {
+class ProdRadioRepository(private val radioStationApi: RadioStationApi) :
+    RadioRepository {
 
     override fun getRadioList(): Observable<List<RadioModel>> {
         return radioStationApi

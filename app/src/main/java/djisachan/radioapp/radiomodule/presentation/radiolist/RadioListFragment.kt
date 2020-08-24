@@ -1,4 +1,4 @@
-package djisachan.radioapp.radiomodule.presentation
+package djisachan.radioapp.radiomodule.presentation.radiolist
 
 import android.os.Bundle
 import android.view.*
@@ -13,15 +13,20 @@ import dagger.hilt.android.AndroidEntryPoint
 import djisachan.radioapp.MainSingleActivity
 import djisachan.radioapp.R
 import djisachan.radioapp.radiomodule.domain.RadioModel
+import djisachan.radioapp.radiomodule.presentation.OnRadioClickListener
 
 /**
  * @author Markova Ekaterina on 25-Jul-20
  */
 @AndroidEntryPoint
-class RadioListFragment : Fragment(), OnRadioClickListener {
+class RadioListFragment : Fragment(),
+    OnRadioClickListener {
 
     private val radioViewModel: RadioViewModel by viewModels()
-    private val radioListAdapter = RadioListAdapter(this)
+    private val radioListAdapter =
+        RadioListAdapter(
+            this
+        )
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -36,7 +41,6 @@ class RadioListFragment : Fragment(), OnRadioClickListener {
         initToolbar()
         val recyclerView = view.findViewById<RecyclerView>(R.id.recycler_view)
         recyclerView.adapter = radioListAdapter
-        //radioViewModel = RadioViewModel(ProdRadioRepository(), RadioApp.instance.historyRadioDatabase)
         radioViewModel.radioListData.observe(viewLifecycleOwner, Observer {
             radioListAdapter.setRadioListData(it)
         })

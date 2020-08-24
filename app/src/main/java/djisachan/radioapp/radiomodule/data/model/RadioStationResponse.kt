@@ -1,4 +1,4 @@
-package djisachan.radioapp.radiomodule.domain
+package djisachan.radioapp.radiomodule.data.model
 
 import com.fasterxml.jackson.annotation.JsonProperty
 

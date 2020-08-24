@@ -1,5 +1,6 @@
 package djisachan.radioapp.radiomodule.domain
 
+import djisachan.radioapp.radiomodule.data.model.RadioStationResponse
 import io.reactivex.Observable
 import retrofit2.http.GET
 import retrofit2.http.Path

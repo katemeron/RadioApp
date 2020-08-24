@@ -1,4 +1,4 @@
-package djisachan.radioapp.radiomodule.presentation
+package djisachan.radioapp.radiomodule.presentation.bottomplayer
 
 import android.content.Context.MODE_PRIVATE
 import android.content.SharedPreferences
@@ -16,12 +16,14 @@ import coil.api.load
 import dagger.hilt.android.AndroidEntryPoint
 import djisachan.radioapp.R
 import djisachan.radioapp.radiomodule.domain.RadioModel
+import djisachan.radioapp.radiomodule.presentation.RadioPlayCallback
 
 /**
  * @author Markova Ekaterina on 02-Aug-20
  */
 @AndroidEntryPoint
-class BottomRadioPlayerFragment : Fragment(), RadioPlayCallback {
+class BottomRadioPlayerFragment : Fragment(),
+    RadioPlayCallback {
 
     private val radioPlayerViewModel: RadioPlayerViewModel by viewModels()
 
@@ -29,7 +31,7 @@ class BottomRadioPlayerFragment : Fragment(), RadioPlayCallback {
     private lateinit var playPauseImageView: ImageView
     private lateinit var radioIcon: ImageView
     private lateinit var radioName: TextView
-    private var isPlaying: Boolean = true
+    private var isPlaying = false
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -59,9 +61,23 @@ class BottomRadioPlayerFragment : Fragment(), RadioPlayCallback {
     }
 
     private fun initDependencies() {
-        //radioPlayerViewModel = RadioPlayerViewModel(RadioApp.instance.historyRadioDatabase) //пока без адекватного внедрения зависимостей
-        radioPlayerViewModel.lastRadio.observe(viewLifecycleOwner, Observer {
-            start(it)
+        radioPlayerViewModel.lastRadio.observe(viewLifecycleOwner, Observer { radio ->
+            radio.url?.let {
+                val circularProgressDrawable =
+                    CircularProgressDrawable(radioIcon.context).apply {
+                        strokeWidth = 5f
+                        centerRadius = 30f
+                        start()
+                    }
+                radioName.text = radio.name
+                radioIcon.load(radio.imageUrl) {
+                    crossfade(true)
+                    placeholder(circularProgressDrawable)
+                    error(R.drawable.ic_baseline_emoji_emotions_24)
+                }
+
+                radioPlayerViewModel.savedRadioUrl = it
+            }
         })
     }
 

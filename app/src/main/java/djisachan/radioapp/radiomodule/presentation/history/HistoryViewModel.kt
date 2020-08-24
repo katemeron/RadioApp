@@ -1,4 +1,4 @@
-package djisachan.radioapp.radiomodule.presentation
+package djisachan.radioapp.radiomodule.presentation.history
 
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData

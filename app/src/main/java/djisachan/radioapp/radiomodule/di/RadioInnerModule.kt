@@ -7,8 +7,8 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ApplicationComponent
 import dagger.hilt.android.qualifiers.ApplicationContext
-import djisachan.radioapp.radiomodule.data.ProdRadioRepository
-import djisachan.radioapp.radiomodule.data.RadioRepository
+import djisachan.radioapp.radiomodule.data.repository.ProdRadioRepository
+import djisachan.radioapp.radiomodule.domain.RadioRepository
 import djisachan.radioapp.radiomodule.data.historydao.HistoryRadioDatabase
 import djisachan.radioapp.radiomodule.domain.RadioStationApi
 import retrofit2.Retrofit
@@ -35,7 +35,9 @@ object RadioInnerModule {
 
     @Provides
     fun providesRadioRepository(radioStationApi: RadioStationApi): RadioRepository {
-        return ProdRadioRepository(radioStationApi)
+        return ProdRadioRepository(
+            radioStationApi
+        )
     }
 
     @Provides

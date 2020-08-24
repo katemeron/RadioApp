@@ -1,4 +1,4 @@
-package djisachan.radioapp.radiomodule.presentation
+package djisachan.radioapp.radiomodule.presentation.radiolist
 
 import android.view.LayoutInflater
 import android.view.View
@@ -10,6 +10,7 @@ import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import coil.api.load
 import djisachan.radioapp.R
 import djisachan.radioapp.radiomodule.domain.RadioModel
+import djisachan.radioapp.radiomodule.presentation.OnRadioClickListener
 
 /**
  * Адаптер списка радиостанций
@@ -23,7 +24,9 @@ class RadioListAdapter(private val radioClickListener: OnRadioClickListener) :
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RadioViewHolder {
         val view =
             LayoutInflater.from(parent.context).inflate(R.layout.radio_list_item, parent, false)
-        return RadioViewHolder(view).apply {
+        return RadioViewHolder(
+            view
+        ).apply {
         }
     }
 

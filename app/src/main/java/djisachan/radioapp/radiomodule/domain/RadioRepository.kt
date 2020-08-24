@@ -1,4 +1,4 @@
-package djisachan.radioapp.radiomodule.data
+package djisachan.radioapp.radiomodule.domain
 
 import djisachan.radioapp.radiomodule.domain.RadioModel
 import io.reactivex.Observable

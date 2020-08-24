@@ -1,4 +1,4 @@
-package djisachan.radioapp.radiomodule.presentation
+package djisachan.radioapp.radiomodule.presentation.bottomplayer
 
 import android.content.ComponentName
 import android.content.Context
@@ -20,11 +20,13 @@ import io.reactivex.schedulers.Schedulers
  * Вью модель для нижнего плеера
  * @author Markova Ekaterina on 02-Aug-20
  */
-class RadioPlayerViewModel @ViewModelInject constructor(private val historyRadioDatabase: HistoryRadioDatabase) : ViewModel() {
+class RadioPlayerViewModel @ViewModelInject constructor(private val historyRadioDatabase: HistoryRadioDatabase) :
+    ViewModel() {
 
     private var serviceConnection: ServiceConnection
     private lateinit var playerService: PlayerService
     private var isBound = false
+    var savedRadioUrl: String? = null
 
     val lastRadio = MutableLiveData<RadioModel>()
 
@@ -46,6 +48,7 @@ class RadioPlayerViewModel @ViewModelInject constructor(private val historyRadio
         }
     }
 
+
     /**
      * Запуск проигрывателя, если выбрано радио
      */
@@ -60,8 +63,15 @@ class RadioPlayerViewModel @ViewModelInject constructor(private val historyRadio
      * Рестарт проигрывателя на основании прошлой ссылки после паузы
      */
     fun restartPlaying(context: Context) {
-        val intent = Intent(context, PlayerService::class.java)
-        context.bindService(intent, serviceConnection, Context.BIND_AUTO_CREATE)
+        if (isBound) {
+            val intent = Intent(context, PlayerService::class.java)
+            context.bindService(intent, serviceConnection, Context.BIND_AUTO_CREATE)
+        } else {
+            val intent = Intent(context, PlayerService::class.java)
+            intent.putExtra(PlayerService.URI_KEY, savedRadioUrl)
+            context.startService(intent)
+            context.bindService(intent, serviceConnection, Context.BIND_AUTO_CREATE)
+        }
     }
 
     /**

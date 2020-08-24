@@ -10,9 +10,9 @@ import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.material.navigation.NavigationView
 import dagger.hilt.android.AndroidEntryPoint
 import djisachan.radioapp.radiomodule.domain.RadioModel
-import djisachan.radioapp.radiomodule.presentation.BottomRadioPlayerFragment
-import djisachan.radioapp.radiomodule.presentation.HistoryFragment
-import djisachan.radioapp.radiomodule.presentation.RadioListFragment
+import djisachan.radioapp.radiomodule.presentation.bottomplayer.BottomRadioPlayerFragment
+import djisachan.radioapp.radiomodule.presentation.history.HistoryFragment
+import djisachan.radioapp.radiomodule.presentation.radiolist.RadioListFragment
 import djisachan.radioapp.radiomodule.presentation.RadioPlayCallback
 
 
@@ -28,11 +28,14 @@ class MainSingleActivity : AppCompatActivity(), NavigationView.OnNavigationItemS
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        val bottomFragment = BottomRadioPlayerFragment()
+        val bottomFragment =
+            BottomRadioPlayerFragment()
         radioPlayCallback = bottomFragment
         supportFragmentManager
             .beginTransaction()
-            .add(R.id.fragment_container, RadioListFragment())
+            .add(R.id.fragment_container,
+                RadioListFragment()
+            )
             .add(R.id.bottom_container, bottomFragment)
             .commit()
         initToolbar()
@@ -48,7 +51,9 @@ class MainSingleActivity : AppCompatActivity(), NavigationView.OnNavigationItemS
             R.id.action_history -> {
                 supportFragmentManager
                     .beginTransaction()
-                    .replace(R.id.fragment_container, HistoryFragment())
+                    .replace(R.id.fragment_container,
+                        HistoryFragment()
+                    )
                     .addToBackStack(null)
                     .commit()
             }
