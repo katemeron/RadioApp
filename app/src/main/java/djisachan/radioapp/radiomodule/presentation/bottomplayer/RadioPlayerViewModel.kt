@@ -24,7 +24,7 @@ class RadioPlayerViewModel @ViewModelInject constructor(private val historyRadio
     ViewModel() {
 
     private var serviceConnection: ServiceConnection
-    private lateinit var playerService: PlayerService
+    private var playerService: PlayerService? = null
     private var isBound = false
     var savedRadioUrl: String? = null
 
@@ -53,6 +53,8 @@ class RadioPlayerViewModel @ViewModelInject constructor(private val historyRadio
      * Запуск проигрывателя, если выбрано радио
      */
     fun startPlaying(context: Context, uri: String) {
+        playerService?.stopPlaying()
+
         val intent = Intent(context, PlayerService::class.java)
         intent.putExtra(PlayerService.URI_KEY, uri)
         context.startService(intent)

@@ -19,7 +19,7 @@ import djisachan.radioapp.radiomodule.presentation.OnRadioClickListener
 class RadioListAdapter(private val radioClickListener: OnRadioClickListener) :
     RecyclerView.Adapter<RadioListAdapter.RadioViewHolder>() {
 
-    private var radioList: List<RadioModel> = ArrayList()
+    private var radioList: List<RadioModel> = emptyList()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RadioViewHolder {
         val view =

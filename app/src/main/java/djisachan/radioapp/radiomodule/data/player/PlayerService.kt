@@ -37,6 +37,10 @@ class PlayerService : Service() {
         return START_STICKY
     }
 
+    fun stopPlaying(){
+        radioPlayer.pause()
+    }
+
     inner class PlayerBinder : Binder() {
         fun getService(): PlayerService {
             return this@PlayerService

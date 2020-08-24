@@ -1,9 +1,7 @@
 package djisachan.radioapp.radiomodule.presentation.history
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
@@ -11,6 +9,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.RecyclerView
 import dagger.hilt.android.AndroidEntryPoint
+import djisachan.radioapp.MainSingleActivity
 import djisachan.radioapp.R
 import djisachan.radioapp.radiomodule.domain.RadioModel
 import djisachan.radioapp.radiomodule.presentation.OnRadioClickListener
@@ -52,8 +51,23 @@ class HistoryFragment : Fragment(),
         historyViewModel.getHistoryList()
     }
 
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.history_menu, menu)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.action_clear_history -> {
+                historyViewModel.clearHistory()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+
     override fun onClick(radio: RadioModel) {
-        //
+        (requireActivity() as MainSingleActivity).updateRadioPlayerFragment(radio)
     }
 
     private fun initToolbar() {

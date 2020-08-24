@@ -1,9 +1,6 @@
 package djisachan.radioapp.radiomodule.data.historydao
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.room.*
 import io.reactivex.Completable
 import io.reactivex.Maybe
 import io.reactivex.Observable
@@ -24,4 +21,7 @@ interface HistoryDao {
 
     @Query("SELECT * FROM historyradio WHERE stationuuid = :id")
     fun getRadioById(id: String): Single<HistoryRadio>
+
+    @Query("DELETE FROM historyradio")
+    fun clearHistory(): Completable
 }

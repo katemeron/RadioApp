@@ -23,8 +23,7 @@ class HistoryViewModel @ViewModelInject constructor(
      * Получить список истории
      */
     fun getHistoryList() {
-        val dao = historyRadioDatabase.getHistoryDao()
-        dao.getAll()
+        historyRadioDatabase.getHistoryDao().getAll()
             .map {
                 it.map { station ->
                     RadioModel(
@@ -39,5 +38,14 @@ class HistoryViewModel @ViewModelInject constructor(
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({ radioListData.value = it }, {})
 
+    }
+
+    fun clearHistory() {
+        historyRadioDatabase.getHistoryDao().clearHistory()
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({
+                radioListData.value = emptyList()
+            }, {})
     }
 }
