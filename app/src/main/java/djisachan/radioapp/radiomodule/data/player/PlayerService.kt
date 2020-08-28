@@ -9,6 +9,7 @@ import android.content.Intent
 import android.graphics.Color
 import android.os.Binder
 import android.os.IBinder
+import android.widget.ImageView
 import android.widget.RemoteViews
 import djisachan.radioapp.R
 
@@ -21,8 +22,10 @@ import djisachan.radioapp.R
 class PlayerService : Service() {
 
     private val playerBinder = PlayerBinder()
+    private val views = RemoteViews(packageName, R.layout.notification_layout)
+    private lateinit var playView:ImageView
+    private lateinit var stopView:ImageView
     private lateinit var radioPlayer: RadioPlayer
-    private var messageId = 1000
 
     override fun onBind(intent: Intent?): IBinder? {
         return playerBinder
@@ -38,10 +41,6 @@ class PlayerService : Service() {
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        val views = RemoteViews(
-            packageName,
-            R.layout.notification_layout
-        )
         val channelId = createNotificationChannel("my_service", "My Background Service")
         val notification = Notification.Builder(this, channelId)
             .setOngoing(true)
