@@ -52,12 +52,13 @@ class RadioPlayerViewModel @ViewModelInject constructor(private val historyRadio
     /**
      * Запуск проигрывателя, если выбрано радио
      */
-    fun startPlaying(context: Context, uri: String) {
+    fun startPlaying(context: Context, radio: RadioModel) {
         playerService?.stopPlaying()
 
         val intent = Intent(context, PlayerService::class.java)
-        intent.putExtra(PlayerService.URI_KEY, uri)
-        context.startService(intent)
+        intent.putExtra(PlayerService.URI_KEY, radio.url)
+        intent.putExtra(PlayerService.RADIO_NAME, radio.name)
+        context.startForegroundService(intent)
         context.bindService(intent, serviceConnection, Context.BIND_AUTO_CREATE)
     }
 

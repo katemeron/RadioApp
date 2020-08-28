@@ -1,6 +1,8 @@
 package djisachan.radioapp.radiomodule.presentation.bottomplayer
 
+import android.app.PendingIntent
 import android.content.Context.MODE_PRIVATE
+import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -14,6 +16,7 @@ import androidx.lifecycle.Observer
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import coil.api.load
 import dagger.hilt.android.AndroidEntryPoint
+import djisachan.radioapp.MainSingleActivity
 import djisachan.radioapp.R
 import djisachan.radioapp.radiomodule.domain.RadioModel
 import djisachan.radioapp.radiomodule.presentation.RadioPlayCallback
@@ -112,7 +115,7 @@ class BottomRadioPlayerFragment : Fragment(),
                 error(R.drawable.ic_baseline_emoji_emotions_24)
             }
 
-            radioPlayerViewModel.startPlaying(requireActivity(), it)
+            radioPlayerViewModel.startPlaying(requireActivity(), radio)
             playPauseImageView.setImageResource(R.drawable.ic_pause_circle_outline_36)
             isPlaying = true
         }
@@ -124,8 +127,24 @@ class BottomRadioPlayerFragment : Fragment(),
             .apply()
     }
 
+
+    private fun showNotification(pos: Int) {
+        val notificationIntent = Intent(activity, MainSingleActivity::class.java)
+        notificationIntent.action = MAIN_ACTION
+        notificationIntent.flags = (Intent.FLAG_ACTIVITY_NEW_TASK
+                or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+
+        val pendingIntent = PendingIntent.getActivity(
+            activity, 0,
+            notificationIntent, 0
+        )
+    }
+
     companion object {
         private const val LAST_RADIO_PREF = "last.radio.shared.preference"
         private const val LAST_RADIO_ID = "last.radio.id"
+        private const val MAIN_ACTION = "action.main"
+        private const val STARTFOREGROUND_ACTION = "action.startforeground"
+        private const val STOPFOREGROUND_ACTION = "action.stopforeground"
     }
 }
